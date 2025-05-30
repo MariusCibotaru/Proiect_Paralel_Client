@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   TextField,
@@ -9,19 +9,28 @@ import {
   CircularProgress
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { registerUser } from '../redux/slices/userSlice';
+import { registerUser, selectIsAuth, selectIsLoading, selectUserError } from '../redux/slices/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterPage: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { loading, error } = useAppSelector(state => state.user);
+    const navigate = useNavigate();
+    const isAuth = useAppSelector(selectIsAuth);
+    const isLoading = useAppSelector(selectIsLoading);
+    const isError = useAppSelector(selectUserError);
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         email: '',
         password: ''
     });
-
     const [openSnackbar, setOpenSnackbar] = useState(false);
+
+    useEffect(() => {
+        if (isAuth) {
+        navigate('/');
+        }
+    }, [isAuth, navigate]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -98,10 +107,10 @@ const RegisterPage: React.FC = () => {
             variant="contained"
             color="primary"
             onClick={handleSubmit}
-            disabled={loading}
+            disabled={isLoading}
             sx={{ fontSize: '18px', height: 45, position: 'relative' }}
             >
-            {loading ? (
+            {isLoading ? (
                 <CircularProgress size={24} sx={{ color: 'white' }} />
             ) : (
                 'Register'
@@ -112,7 +121,7 @@ const RegisterPage: React.FC = () => {
             open={openSnackbar}
             autoHideDuration={4000}
             onClose={() => setOpenSnackbar(false)}
-            message={error || 'Registration failed'}
+            message={isError || 'Registration failed'}
             />
         </Box>
     </Box>
