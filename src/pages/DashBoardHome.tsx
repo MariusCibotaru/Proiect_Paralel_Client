@@ -94,7 +94,8 @@ const DashBoardHome: React.FC = () => {
           textTransform: 'none',
           fontSize: '26px',
           width: '100%',
-          maxWidth: '600px'
+          maxWidth: '600px',
+          borderRadius: '24px'
         }}
       >
         {status === 'loading' ? 'Processing...' : 'Send'}
