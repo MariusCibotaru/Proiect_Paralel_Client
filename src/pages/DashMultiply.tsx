@@ -127,7 +127,7 @@ const DashMultiply: React.FC = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 textAlign: 'center',
-                p: 4,
+                p: isMobile ? 2 : 4,
                 cursor: 'pointer',
                 transition: '0.2s',
                 '&:hover': {
