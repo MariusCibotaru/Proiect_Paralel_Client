@@ -160,7 +160,7 @@ const userSlice = createSlice({
     }
 });
 
-
+export const selectUser = (state: { user: UserState }) => state.user.user;
 export const selectIsAuth = (state: { user: UserState }) => state.user.isAuth;
 export const selectIsLoading = (state: { user: UserState }) => state.user.status === 'loading';
 export const selectUserStatus = (state: { user: UserState }) => state.user.status;

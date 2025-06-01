@@ -85,16 +85,21 @@ const DashBoardHome: React.FC = () => {
         />
       </Box>
 
-      {selectedFile && (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSend}
-          disabled={status === 'loading'}
-        >
-          {status === 'loading' ? 'Processing...' : 'Send'}
-        </Button>
-      )}
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleSend}
+        disabled={!selectedFile || status === 'loading'}
+        sx={{
+          textTransform: 'none',
+          fontSize: '26px',
+          width: '100%',
+          maxWidth: '600px'
+        }}
+      >
+        {status === 'loading' ? 'Processing...' : 'Send'}
+      </Button>
+
     </Box>
   );
 };

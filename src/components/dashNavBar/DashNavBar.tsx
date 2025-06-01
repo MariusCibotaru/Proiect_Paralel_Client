@@ -1,6 +1,8 @@
 import React from 'react';
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Button, Stack, useMediaQuery } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
+import { selectUser } from '../../redux/slices/userSlice';
+import { useAppSelector } from '../../redux/hooks';
 
 const navItems = [
   { name: 'Loader', path: '/dashboard/loader' },
@@ -9,22 +11,32 @@ const navItems = [
 
 const DashNavBar: React.FC = () => {
   const location = useLocation();
+  const isUser = useAppSelector(selectUser);
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   return (
     <Box sx={{
-        minHeight: '100%',
-        width: '150px',
-        backgroundColor: '#222',
-        borderRadius: '32px',
-        color: '#fff',
+      minHeight: '100%',
+      width: isMobile ? '100%' : '175px',
+      backgroundColor: '#222',
+      borderRadius: '32px',
+      color: '#fff',
+      display: 'flex',
+      flexDirection: isMobile ? 'row' : 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      p: 2,
+    }}>
+      <Box sx={{ 
+        flex: 0,
         display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'stretch',
-        justifyContent: 'flex-start',
-        p: 2,
-      }}
-    >
-      <Stack spacing={2} sx={{ flex: 1 }}>
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: isMobile ? 'row' : 'column', 
+        width: '100%', 
+        height: '100%',
+        gap: 1
+      }}>
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (
@@ -34,10 +46,11 @@ const DashNavBar: React.FC = () => {
               to={item.path}
               variant={isActive ? 'contained' : 'outlined'}
               sx={{       
-                aspectRatio: '1/0.8',         
+                aspectRatio: '1/0.5',     
+                width: '100%',     
                 fontSize: '16px',
                 fontWeight: 600,
-                borderRadius: '12px',
+                borderRadius: '24px',
                 color: '#fff',
                 borderColor: '#3b82f6',
                 backgroundColor: isActive ? '#3b82f6' : 'transparent',
@@ -51,7 +64,52 @@ const DashNavBar: React.FC = () => {
             </Button>
           );
         })}
-      </Stack>
+      </Box>
+
+    {!isMobile && 
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        pb: 2,
+        gap: 0.5
+      }}>
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          gap: 1,
+          width: '100%',
+        }}>
+          <Box sx={{
+            width: 10,
+            height: 10,
+            borderRadius: '50%',
+            backgroundColor: '#22c55e',
+          }}/>
+          <Box sx={{
+            fontSize: '16px',
+            color: '#aaa',
+            textAlign: 'center',
+            wordBreak: 'break-word',
+          }}>
+            {isUser?.firstName} {isUser?.lastName}
+          </Box>
+        </Box>
+
+        <Box sx={{
+          fontSize: '14px',
+          color: '#aaa',
+          maxWidth: '100%',
+          wordBreak: 'break-all',
+        }}>
+          {isUser?.email}
+        </Box>
+      </Box>
+    }
     </Box>
   );
 };
