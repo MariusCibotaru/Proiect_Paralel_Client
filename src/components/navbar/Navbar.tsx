@@ -102,26 +102,22 @@ const Navbar: React.FC = () => {
                 >
                     Dashboard
                 </Button>
-                <Button
-                    onClick={handleLogout}
+                <IconButton
+                    onClick={handleLoginClick}
                     sx={{
-                        textTransform: 'none',
-                        fontSize: '16px',
-                        borderRadius: '12px',
                         backgroundColor: '#3b82f6',
                         color: '#fff',
+                        borderRadius: '12px',
                         border: '1px solid #3b82f6',
-                        px: 2,
-                        py: 1,
-                        fontWeight: 700,
+                        p: 1,
                         '&:hover': {
                             backgroundColor: '#2563eb',
                             borderColor: '#2563eb',
                         },
                     }}
                 >
-                    Log out
-                </Button>
+                    <LogoutIcon />
+                </IconButton>
             </Stack>
         ) : (
             <Stack direction="row" spacing={isMobile ? 1 : 2}>
@@ -145,22 +141,26 @@ const Navbar: React.FC = () => {
                 >
                     Register
                 </Button>
-                <IconButton
+                <Button
                     onClick={handleLoginClick}
                     sx={{
+                        textTransform: 'none',
+                        fontSize: '16px',
+                        borderRadius: '12px',
                         backgroundColor: '#3b82f6',
                         color: '#fff',
-                        borderRadius: '12px',
                         border: '1px solid #3b82f6',
-                        p: 1,
+                        px: 2,
+                        py: 1,
+                        fontWeight: 700,
                         '&:hover': {
                             backgroundColor: '#2563eb',
                             borderColor: '#2563eb',
                         },
                     }}
                 >
-                    <LogoutIcon />
-                </IconButton>
+                    Login
+                </Button>
             </Stack>
         )}
 
