@@ -1,9 +1,10 @@
 import React from 'react';
-import { Box, Stack, Button, useMediaQuery } from '@mui/material';
+import { Box, Stack, Button, useMediaQuery, IconButton } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { clearUser, selectIsAuth } from '../../redux/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import Logo from '../../images/logo/Logo.png'
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Navbar: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -144,26 +145,22 @@ const Navbar: React.FC = () => {
                 >
                     Register
                 </Button>
-                <Button
+                <IconButton
                     onClick={handleLoginClick}
                     sx={{
-                        textTransform: 'none',
-                        fontSize: '16px',
-                        borderRadius: '12px',
                         backgroundColor: '#3b82f6',
                         color: '#fff',
+                        borderRadius: '12px',
                         border: '1px solid #3b82f6',
-                        px: 2,
-                        py: 1,
-                        fontWeight: 700,
+                        p: 1,
                         '&:hover': {
                             backgroundColor: '#2563eb',
                             borderColor: '#2563eb',
                         },
                     }}
                 >
-                    Login
-                </Button>
+                    <LogoutIcon />
+                </IconButton>
             </Stack>
         )}
 
