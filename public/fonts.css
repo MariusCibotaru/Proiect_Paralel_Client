@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Nova';
+    font-style: normal;
+    font-weight: 700;
+    src: url('/fonts/Nova_Square/NovaSquare-Regular.ttf') format('truetype');
+  }
+    
+  body {
+    font-family: 'Nova', sans-serif;
+  }
+  

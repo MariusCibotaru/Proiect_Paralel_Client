@@ -4,14 +4,13 @@ import {
   TextField,
   Typography,
   Button,
-  Stack,
   Snackbar,
   CircularProgress
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { loginUser, selectIsAuth, selectIsLoading, selectUserError } from '../redux/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
-import { error } from 'console';
+import Hero from '../images/hero/HeroFon2.png';
 
 const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -53,13 +52,29 @@ const LoginPage: React.FC = () => {
 
   return (
     <Box sx={{
+      width: '100%',
       flex: 1,
-      height: '100%',
+      backgroundImage: `url(${Hero})`,
+      backgroundSize: 'contain',
+      backgroundPosition: 'bottom center',
+      backgroundRepeat: 'no-repeat',
       display: 'flex',
+      alignItems: 'center',
       justifyContent: 'center',
-      alignItems: 'center'
+      flexDirection: 'column',
+      backgroundColor: '#222',
+      color: '#fff',
+      borderRadius: '32px'
     }}>
-      <Box sx={{ width: '100%', maxWidth: 600 }}>
+      <Box sx={{
+        width: '100%',
+        maxWidth: 600,
+        borderRadius: '32px',
+        backdropFilter: 'blur(16px)',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        p: 4,
+        boxShadow: '0 0 30px rgba(0,0,0,0.3)',
+      }}>
         <Typography variant="h4" align="center" gutterBottom>
           Sign In
         </Typography>

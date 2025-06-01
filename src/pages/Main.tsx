@@ -10,6 +10,7 @@ import { fetchUser, selectIsAuth, selectIsLoading, selectUserStatus } from '../r
 import DashBoard from './DashBoard';
 import DashBoardHome from './DashBoardHome';
 import UserProfile from './UserProfile';
+import { darkTheme } from '../utils/theme';
 
 const ProtectedRoute: React.FC = () => {
   const isAuthenticated = useAppSelector(selectIsAuth);
@@ -45,6 +46,7 @@ const Main: React.FC = () => {
   const accessToken = localStorage.getItem('token');
   const isAuthorized = useAppSelector(selectIsAuth);
   const isLoading = useAppSelector(selectIsLoading);
+  const [theme, setTheme] = useState(darkTheme);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -69,29 +71,32 @@ const Main: React.FC = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', }}>
-      
-      <Box sx={{ p: '1vh', pb: 0, }}>
-        <Navbar/>
-      </Box>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', }}>
+        
+        <Box sx={{ p: '1vh', pb: 0, }}>
+          <Navbar/>
+        </Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, boxSizing: 'border-box', p: '1vh', }}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+        <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, boxSizing: 'border-box', p: '1vh', }}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
 
-          <Route element={<ProtectedRoute />}>
-            <Route path="DashBoard" element={<DashBoard />}>
-              <Route index element={<Navigate to="loader" />} />
-              <Route path="loader" element={<DashBoardHome />} />
-              <Route path="access" element={<UserProfile />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="DashBoard" element={<DashBoard />}>
+                <Route index element={<Navigate to="loader" />} />
+                <Route path="loader" element={<DashBoardHome />} />
+                <Route path="access" element={<UserProfile />} />
+              </Route>
             </Route>
-          </Route>
 
-        </Routes>
+          </Routes>
+        </Box>
       </Box>
-    </Box>
+    </ThemeProvider>
   );
 };
 

@@ -11,6 +11,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { registerUser, selectIsAuth, selectIsLoading, selectUserError } from '../redux/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
+import Hero from '../images/hero/HeroFon2.png';
 
 const RegisterPage: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -55,15 +56,31 @@ const RegisterPage: React.FC = () => {
 
   return (
     <Box sx={{
+        width: '100%',
         flex: 1,
-        height: '100%',
+        backgroundImage: `url(${Hero})`,
+        backgroundSize: 'contain',
+        backgroundPosition: 'bottom center',
+        backgroundRepeat: 'no-repeat',
         display: 'flex',
+        alignItems: 'center',
         justifyContent: 'center',
-        alignItems: 'center'
+        flexDirection: 'column',
+        backgroundColor: '#222',
+        color: '#fff',
+        borderRadius: '32px'
     }}>
-        <Box sx={{ width: '100%', maxWidth: 600 }}>
+        <Box sx={{
+            width: '100%',
+            maxWidth: 600,
+            borderRadius: '32px',
+            backdropFilter: 'blur(16px)',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            p: 4,
+            boxShadow: '0 0 30px rgba(0,0,0,0.3)',
+        }}>
             <Typography variant="h4" align="center" gutterBottom>
-            Welcome
+                Welcome
             </Typography>
 
             <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
@@ -84,44 +101,44 @@ const RegisterPage: React.FC = () => {
             </Stack>
 
             <TextField
-            fullWidth
-            label="Email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            sx={{ mb: 2 }}
+                fullWidth
+                label="Email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                sx={{ mb: 2 }}
             />
 
             <TextField
-            fullWidth
-            label="Password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            sx={{ mb: 3 }}
+                fullWidth
+                label="Password"
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                sx={{ mb: 3 }}
             />
 
             <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            disabled={isLoading}
-            sx={{ fontSize: '18px', height: 45, position: 'relative' }}
-            >
-            {isLoading ? (
-                <CircularProgress size={24} sx={{ color: 'white' }} />
-            ) : (
-                'Register'
-            )}
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
+                disabled={isLoading}
+                sx={{ fontSize: '18px', height: 45, position: 'relative' }}
+                >
+                {isLoading ? (
+                    <CircularProgress size={24} sx={{ color: 'white' }} />
+                ) : (
+                    'Register'
+                )}
             </Button>
 
             <Snackbar
-            open={openSnackbar}
-            autoHideDuration={4000}
-            onClose={() => setOpenSnackbar(false)}
-            message={isError || 'Registration failed'}
+                open={openSnackbar}
+                autoHideDuration={4000}
+                onClose={() => setOpenSnackbar(false)}
+                message={isError || 'Registration failed'}
             />
         </Box>
     </Box>

@@ -1,21 +1,40 @@
 import React from 'react';
-import { Box, Typography, Stack, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Box, Stack, Button, useMediaQuery } from '@mui/material';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { clearUser, selectIsAuth } from '../../redux/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import Logo from '../../images/logo/Logo.png'
 
 const Navbar: React.FC = () => {
     const dispatch = useAppDispatch();
     const isAuth = useAppSelector(selectIsAuth);
+    const isMobile = useMediaQuery('(max-width:600px)');
+    const handleNavigate = useNavigate();
+    const location = useLocation(); 
 
     const handleLogout = () => {
         dispatch(clearUser());
     };
 
+    const handleLoginClick = () => {
+        handleNavigate('/login');
+    };
+
+    const handleRegisterClick = () => {
+        handleNavigate('/register');
+    };
+
+    const handleHomeClick = (e: React.MouseEvent) => {
+        if (e.button === 1) return;
+        e.preventDefault();
+        handleNavigate('');
+    };
+
+
   return (
     <Box sx={{
         height: '80px',
-        px: 4,
+        px: isMobile ? 2 : 4,
         backgroundColor: '#222',
         color: '#fff',
         display: 'flex',
@@ -23,17 +42,44 @@ const Navbar: React.FC = () => {
         alignItems: 'center',
         justifyContent: 'space-between',
     }}>
-        <Typography component={Link} to="/" sx={{ 
-            color: '#fff', 
-            fontSize: '28px',
-            textDecoration: 'none', 
-            fontWeight: 700 
+        <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height:'100%',
         }}>
-            Home
-        </Typography>
+            <Box
+                component="a"
+                href={`/${location.pathname.split('/')[1] || 'en'}`}
+                onMouseDown={handleHomeClick}
+                onClick={handleHomeClick}
+                draggable={false}  
+                sx={{
+                    height: 'clamp(40px, 4vw, 55px)',
+                    width: 'auto',
+                    cursor: 'pointer',
+                    transition: 'all 0.55s ease-in-out',
+                    userSelect: 'none',
+                }}
+            >
+                <Box
+                    onClick={handleHomeClick}
+                    component="img"
+                    src={Logo}
+                    alt="Logo"
+                    sx={{
+                        height: 'clamp(40px, 4vw, 55px)',
+                        m: 'auto',
+                        width: 'auto',
+                        cursor: 'pointer',
+                        transition: 'all 0.55s ease-in-out',
+                    }}
+                />
+            </Box>
+        </Box>
 
         {isAuth ? (
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={isMobile ? 1 : 2}>
                 <Button
                     component={Link}
                     to="/dashboard"
@@ -77,10 +123,9 @@ const Navbar: React.FC = () => {
                 </Button>
             </Stack>
         ) : (
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={isMobile ? 1 : 2}>
                 <Button
-                    component={Link}
-                    to="/register"
+                    onClick={handleRegisterClick}
                     sx={{
                         textTransform: 'none',
                         fontSize: '16px',
@@ -100,8 +145,7 @@ const Navbar: React.FC = () => {
                     Register
                 </Button>
                 <Button
-                    component={Link}
-                    to="/login"
+                    onClick={handleLoginClick}
                     sx={{
                         textTransform: 'none',
                         fontSize: '16px',
