@@ -11,6 +11,7 @@ import DashBoard from './DashBoard';
 import DashBoardHome from './DashBoardHome';
 import UserProfile from './UserProfile';
 import { darkTheme } from '../utils/theme';
+import DashMultiply from './DashMultiply';
 
 const ProtectedRoute: React.FC = () => {
   const isAuthenticated = useAppSelector(selectIsAuth);
@@ -73,13 +74,26 @@ const Main: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh', }}>
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        minHeight: '100dvh',
+        height: '100%' 
+      }}>
         
         <Box sx={{ p: '1vh', pb: 0, }}>
           <Navbar/>
         </Box>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, boxSizing: 'border-box', p: '1vh', }}>
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          flex: 1, 
+          height: '100%',
+          minHeight: '0', 
+          boxSizing: 'border-box', 
+          p: '1vh', 
+        }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
@@ -89,6 +103,7 @@ const Main: React.FC = () => {
               <Route path="DashBoard" element={<DashBoard />}>
                 <Route index element={<Navigate to="loader" />} />
                 <Route path="loader" element={<DashBoardHome />} />
+                <Route path="multiply" element={<DashMultiply />} />
                 <Route path="access" element={<UserProfile />} />
               </Route>
             </Route>

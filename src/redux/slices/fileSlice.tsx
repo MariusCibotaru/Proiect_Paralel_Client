@@ -14,12 +14,13 @@ const initialState: FileUploadState = {
 // Thunk: загрузка файла и получение .root
 export const uploadDataFile = createAsyncThunk<
   void,
-  File,
+  { file: File; serviceType: string },
   { rejectValue: string }
->('file/uploadDataFile', async (file, thunkAPI) => {
+>('file/uploadDataFile', async ({ file, serviceType }, thunkAPI) => {
   try {
     const formData = new FormData();
     formData.append('dataFile', file);
+    formData.append('serviceType', serviceType);
 
     const token = localStorage.getItem('token');
     const response = await axios.post('/file/upload', formData, {
@@ -30,12 +31,11 @@ export const uploadDataFile = createAsyncThunk<
       responseType: 'blob', // получаем .root файл
     });
 
-    // 💾 Принудительно скачать файл в браузере
     const blob = new Blob([response.data], { type: 'application/octet-stream' });
     const downloadUrl = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = downloadUrl;
-    link.download = 'output.root'; // можешь менять название
+    link.download = 'output.root';
     document.body.appendChild(link);
     link.click();
     link.remove();
@@ -46,6 +46,7 @@ export const uploadDataFile = createAsyncThunk<
     return thunkAPI.rejectWithValue(message);
   }
 });
+
 
 const fileSlice = createSlice({
   name: 'file',

@@ -5,7 +5,8 @@ import { selectUser } from '../../redux/slices/userSlice';
 import { useAppSelector } from '../../redux/hooks';
 
 const navItems = [
-  { name: 'Loader', path: '/dashboard/loader' },
+  { name: 'Matrici', path: '/dashboard/loader' },
+  { name: 'Multiplicare', path: '/dashboard/multiply' },
   { name: 'Access', path: '/dashboard/access' },
 ];
 
@@ -28,13 +29,12 @@ const DashNavBar: React.FC = () => {
       p: 2,
     }}>
       <Box sx={{ 
-        flex: 0,
+        flex: '0 0 auto',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: isMobile ? 'row' : 'column', 
         width: '100%', 
-        height: '100%',
         gap: 1
       }}>
         {navItems.map((item) => {
@@ -46,9 +46,9 @@ const DashNavBar: React.FC = () => {
               to={item.path}
               variant={isActive ? 'contained' : 'outlined'}
               sx={{       
-                aspectRatio: '1/0.5',     
+                textTransform: 'none',
                 width: '100%',     
-                fontSize: '16px',
+                fontSize: isMobile ? '15px' : '16px',
                 fontWeight: 600,
                 borderRadius: '24px',
                 color: '#fff',
@@ -66,50 +66,50 @@ const DashNavBar: React.FC = () => {
         })}
       </Box>
 
-    {!isMobile && 
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        pb: 2,
-        gap: 0.5
-      }}>
+      {!isMobile && 
         <Box sx={{
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          gap: 1,
+          flexDirection: 'column',
+          flex: '1 1 auto',
           width: '100%',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          pb: 2,
+          gap: 0.5
         }}>
           <Box sx={{
-            width: 10,
-            height: 10,
-            borderRadius: '50%',
-            backgroundColor: '#22c55e',
-          }}/>
-          <Box sx={{
-            fontSize: '16px',
-            color: '#aaa',
-            textAlign: 'center',
-            wordBreak: 'break-word',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            gap: 1,
+            width: '100%',
           }}>
-            {isUser?.firstName} {isUser?.lastName}
+            <Box sx={{
+              width: 10,
+              height: 10,
+              borderRadius: '50%',
+              backgroundColor: '#22c55e',
+            }}/>
+            <Box sx={{
+              fontSize: '16px',
+              color: '#aaa',
+              textAlign: 'center',
+              wordBreak: 'break-word',
+            }}>
+              {isUser?.firstName} {isUser?.lastName}
+            </Box>
+          </Box>
+
+          <Box sx={{
+            fontSize: '14px',
+            color: '#aaa',
+            maxWidth: '100%',
+            wordBreak: 'break-all',
+          }}>
+            {isUser?.email}
           </Box>
         </Box>
-
-        <Box sx={{
-          fontSize: '14px',
-          color: '#aaa',
-          maxWidth: '100%',
-          wordBreak: 'break-all',
-        }}>
-          {isUser?.email}
-        </Box>
-      </Box>
-    }
+      }
     </Box>
   );
 };

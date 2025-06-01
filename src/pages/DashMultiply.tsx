@@ -3,7 +3,7 @@ import { Box, Button, Typography, useMediaQuery } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { uploadDataFile, selectFileStatus } from '../redux/slices/fileSlice';
 
-const DashBoardHome: React.FC = () => {
+const DashMultiply: React.FC = () => {
   const dispatch = useAppDispatch();
   const status = useAppSelector(selectFileStatus);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -45,7 +45,7 @@ const DashBoardHome: React.FC = () => {
 
   const handleSend = () => {
     if (selectedFile) {
-      dispatch(uploadDataFile({ file: selectedFile, serviceType: 'matrix' }));
+        dispatch(uploadDataFile({ file: selectedFile, serviceType: 'matrix_operations' }));
     }
   };
 
@@ -73,7 +73,7 @@ const DashBoardHome: React.FC = () => {
           textAlign="center"
           sx={{ fontSize: 'clamp(1.2rem, 2vw, 2rem)' }}
         >
-          Trimiteți un fișier care conține o matrice — iar noi vă întoarcem:
+          Trimiteți două matrici — iar noi le înmulțim pentru dumneavoastră
         </Typography>
 
         <Typography
@@ -84,10 +84,9 @@ const DashBoardHome: React.FC = () => {
             fontSize: 'clamp(0.95rem, 1.2vw, 1.25rem)'
           }}
         >
-          - Matricea originală  
-          - Matricea transpusă  
-          - Determinantul  
-          - Matricea inversă (dacă este posibil)
+          - Se efectuează înmulțirea a două matrici  
+          - Rezultatul este o matrice nouă  
+          - Formatul fișierului trebuie să conțină două blocuri separate
         </Typography>
 
         <Typography
@@ -98,7 +97,7 @@ const DashBoardHome: React.FC = () => {
             fontSize: 'clamp(0.75rem, 1vw, 1.1rem)'
           }}
         >
-          * Se acceptă doar fișiere .txt • Formatul trebuie să fie o matrice maxim 10×10
+          * Se acceptă doar fișiere .txt • Maxim 10×10 per matrice
         </Typography>
       </Box>
 
@@ -139,7 +138,7 @@ const DashBoardHome: React.FC = () => {
           }}
         >
           <Typography variant="h6">
-            {selectedFile ? selectedFile.name : 'Drag & drop or click to upload'}
+            {selectedFile ? selectedFile.name : 'Drag & drop sau apăsați pentru a încărca'}
           </Typography>
           <input
             type="file"
@@ -163,11 +162,11 @@ const DashBoardHome: React.FC = () => {
             borderRadius: '24px'
           }}
         >
-          {status === 'loading' ? 'Processing...' : 'Send'}
+          {status === 'loading' ? 'Se procesează...' : 'Trimite'}
         </Button>
       </Box>
     </Box>
   );
 };
 
-export default DashBoardHome;
+export default DashMultiply;
