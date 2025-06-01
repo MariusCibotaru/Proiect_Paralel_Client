@@ -103,7 +103,7 @@ const Navbar: React.FC = () => {
                     Dashboard
                 </Button>
                 <IconButton
-                    onClick={handleLoginClick}
+                    onClick={handleLogout}
                     sx={{
                         backgroundColor: '#3b82f6',
                         color: '#fff',
